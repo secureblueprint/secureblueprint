@@ -9,7 +9,7 @@
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
     --navy:#0f2240; --navy-mid:#1e3a5f; --navy-light:#2a4f7c;
@@ -21,7 +21,7 @@
   *{box-sizing:border-box;margin:0;padding:0;}
   body{font-family:'DM Sans',sans-serif;background:var(--bg);min-height:100vh;color:var(--text-dark);}
   .header{background:var(--navy);padding:0 40px;height:64px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 20px rgba(15,34,64,0.3);}
-  .logo{font-family:'Syne',sans-serif;font-weight:800;font-size:22px;color:#fff;letter-spacing:-0.5px;display:flex;align-items:center;gap:10px;}
+  .logo{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:22px;color:#fff;letter-spacing:-0.5px;display:flex;align-items:center;gap:10px;}
   .logo-icon{width:32px;height:32px;background:linear-gradient(135deg,var(--cyan),var(--cyan-light));border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;}
   .logo span{color:var(--cyan-light);}
   .arch-selector-wrap{display:flex;align-items:center;gap:8px;}
@@ -42,18 +42,18 @@
   .card-header{background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 100%);padding:28px 32px;position:relative;overflow:hidden;}
   .card-header::before{content:'';position:absolute;right:-20px;top:-20px;width:120px;height:120px;border-radius:50%;background:rgba(14,165,233,0.1);}
   .step-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(14,165,233,0.2);border:1px solid rgba(14,165,233,0.3);color:var(--cyan-light);padding:4px 12px;border-radius:20px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:12px;}
-  .card-title{font-family:'Syne',sans-serif;font-size:24px;font-weight:700;color:white;line-height:1.2;position:relative;z-index:1;}
+  .card-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:24px;font-weight:700;color:white;line-height:1.3;position:relative;z-index:1;}
   .card-desc{color:rgba(255,255,255,0.6);font-size:14px;margin-top:6px;position:relative;z-index:1;}
   .card-body{padding:28px 32px;}
 
   /* FIELDS */
   .field-group{margin-bottom:20px;}
-  .field-group.greyed{opacity:0.45;pointer-events:none;}
+  .field-group.greyed{opacity:0.5;position:relative;}.field-group.greyed .field-label{color:var(--text-light);}.field-group.greyed .field-select,.field-group.greyed .field-input,.field-group.greyed .field-textarea,.field-group.greyed .multi-select{pointer-events:none;}
   .field-label{display:block;font-size:13px;font-weight:600;color:var(--text-dark);margin-bottom:7px;text-transform:uppercase;letter-spacing:0.4px;}
   .field-input,.field-select,.field-textarea{width:100%;border:1.5px solid var(--border);border-radius:8px;padding:11px 14px;font-size:14px;font-family:'DM Sans',sans-serif;color:var(--text-dark);background:#fafcff;outline:none;transition:border-color 0.2s,box-shadow 0.2s;}
   .field-input:focus,.field-select:focus,.field-textarea:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(14,165,233,0.1);background:white;}
   .field-textarea{height:90px;resize:vertical;}
-  .not-applicable-note{display:inline-flex;align-items:center;gap:6px;background:#f1f5f9;border:1px solid var(--border);border-radius:6px;padding:6px 10px;font-size:11px;color:var(--text-light);margin-top:6px;font-style:italic;}
+  .not-applicable-note{display:flex;align-items:flex-start;gap:8px;background:linear-gradient(135deg,#fff8e6,#fff3d6);border:1px solid #f59e0b;border-radius:8px;padding:10px 14px;font-size:12px;color:#92400e;margin-top:8px;line-height:1.5;}
 
   /* MULTI SELECT */
   .multi-select{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px;}
@@ -81,7 +81,7 @@
   /* SIDEBAR */
   .sidebar{background:var(--white);border-radius:16px;box-shadow:0 4px 24px rgba(15,34,64,0.08);overflow:hidden;position:sticky;top:110px;max-height:calc(100vh - 130px);display:flex;flex-direction:column;}
   .sidebar-header{background:linear-gradient(135deg,var(--navy-light),var(--navy-mid));padding:14px 20px;flex-shrink:0;}
-  .sidebar-title{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:white;text-transform:uppercase;letter-spacing:0.5px;}
+  .sidebar-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:700;color:white;text-transform:uppercase;letter-spacing:0.5px;}
   .sidebar-arch-badge{display:inline-block;background:rgba(14,165,233,0.25);color:var(--cyan-light);font-size:11px;font-weight:600;padding:2px 8px;border-radius:4px;margin-top:4px;}
   .sidebar-body{padding:14px 18px;overflow-y:auto;flex:1;}
   .sidebar-body::-webkit-scrollbar{width:4px;}
@@ -108,7 +108,7 @@
   .summary-section{background:#f8fafc;border:1px solid var(--border);border-radius:12px;overflow:hidden;}
   .summary-section-header{background:var(--navy);padding:10px 16px;display:flex;align-items:center;gap:8px;}
   .summary-section-icon{width:24px;height:24px;background:rgba(14,165,233,0.2);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:12px;}
-  .summary-section-title{font-family:'Syne',sans-serif;font-size:12px;font-weight:700;color:white;text-transform:uppercase;letter-spacing:0.5px;}
+  .summary-section-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;font-weight:700;color:white;text-transform:uppercase;letter-spacing:0.5px;}
   .summary-section-body{padding:12px 16px;}
   .summary-row{display:flex;justify-content:space-between;align-items:flex-start;padding:5px 0;border-bottom:1px solid var(--border);gap:12px;}
   .summary-row:last-child{border-bottom:none;}
@@ -117,12 +117,12 @@
   .summary-val.notes{font-size:11px;color:var(--text-mid);font-style:italic;font-weight:400;}
   .modal-overlay{position:fixed;inset:0;background:rgba(15,34,64,0.6);display:flex;align-items:center;justify-content:center;z-index:200;backdrop-filter:blur(4px);}
   .modal{background:white;border-radius:16px;padding:32px;max-width:420px;width:90%;box-shadow:0 20px 60px rgba(15,34,64,0.3);}
-  .modal-title{font-family:'Syne',sans-serif;font-size:20px;font-weight:700;color:var(--text-dark);margin-bottom:12px;}
+  .modal-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:20px;font-weight:700;color:var(--text-dark);margin-bottom:12px;}
   .modal-text{font-size:14px;color:var(--text-mid);line-height:1.6;margin-bottom:24px;}
   .modal-buttons{display:flex;gap:12px;justify-content:flex-end;}
   .summary-banner{background:linear-gradient(135deg,var(--navy) 0%,var(--navy-light) 100%);border-radius:16px;padding:32px;margin-bottom:24px;position:relative;overflow:hidden;}
   .summary-banner::before{content:'';position:absolute;right:-40px;top:-40px;width:200px;height:200px;border-radius:50%;background:rgba(14,165,233,0.08);}
-  .summary-banner-title{font-family:'Syne',sans-serif;font-size:28px;font-weight:800;color:white;position:relative;z-index:1;}
+  .summary-banner-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:28px;font-weight:800;color:white;position:relative;z-index:1;}
   .summary-banner-sub{color:rgba(255,255,255,0.6);font-size:14px;margin-top:6px;position:relative;z-index:1;}
   .summary-banner-actions{display:flex;gap:12px;margin-top:20px;position:relative;z-index:1;flex-wrap:wrap;}
   .tag{display:inline-flex;align-items:center;gap:4px;background:rgba(14,165,233,0.15);border:1px solid rgba(14,165,233,0.25);color:var(--cyan-light);padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;}
@@ -136,79 +136,9 @@
 </head>
 <body>
 <div id="root"></div>
-<script type="text/babel">
-const {useState, useCallback} = React;
-
-const SECTION_ICONS = {
-  tm1:"🎯",tm2:"⚠️",archStyle:"🏗️",identity:"🔐",authz:"🛡️",
-  comms:"🔒",code:"💻",data:"🗄️",sdlc:"🔄",testing:"🧪",
-  prod:"🚀",thirdparty:"🔗",resilience:"♻️",compliance:"📋"
-};
-
-const STEP_LABELS = {
-  tm1:"Threat Modelling – What Are We Building?", tm2:"Threat Modelling – What Can Go Wrong?",
-  archStyle:"Architecture Style", identity:"Identity & Authentication", authz:"Authorisation",
-  comms:"Secure Communications", code:"Secure Code", data:"Secure Data",
-  thirdparty:"Third Party & Supply Chain Risk", sdlc:"Secure SDLC",
-  testing:"Security Testing", prod:"Production Security",
-  resilience:"Resilience & Recovery", compliance:"Compliance & Regulatory"
-};
-
-const FIELD_LABELS = {
-  tm_goal:"System Purpose", tm_users:"Users", tm_value:"What Needs Protecting",
-  tm_weak:"Weak Spots", tm_threats:"Threat Types",
-  arch:"Architecture Style", hosting:"Hosting",
-  user_store:"User Store", auth_engine:"Auth Method", token:"Token Type", mfa:"MFA",
-  rbac:"User Roles", action_auth:"Permission Controls", data_auth:"Data Access Model",
-  tls:"TLS Version", mtls:"mTLS", api_gateway:"API Gateway",
-  input_validation:"Input Validation", sql:"SQL Protection",
-  secret_handling:"Secrets Handling", mask:"Mask Logs",
-  class:"Data Classification", encrypt:"Encrypted at Rest",
-  data_residency:"Data Residency", data_mask:"Mask Sensitive Data",
-  third_party_types:"Third-Party Integrations", vendor_assessment:"Vendor Assessment",
-  dependency_scan:"Dependency Scanning",
-  sast:"SAST", sca:"SCA", secret_scan:"Secrets Scanning",
-  training:"Security Training", approved_tools:"Approved Tools",
-  dast:"DAST", pentest:"Pen Test Frequency", bug_bounty:"Bug Bounty",
-  waf:"WAF", monitor:"Monitoring / SIEM", ir:"Incident Response Plan", alerting:"Automated Alerting",
-  backup:"Backup Strategy", rto:"RTO", rpo:"RPO", dr_plan:"DR Plan", ha:"High Availability",
-  regulations:"Regulations / Standards", data_residency_compliance:"Data Residency Obligation",
-  audit_logging:"Audit Logging"
-};
-
-const SECTIONS = [
-  {id:"tm1", keys:["tm_goal","tm_users","tm_value","tm1_notes"]},
-  {id:"tm2", keys:["tm_weak","tm_threats","tm2_notes"]},
-  {id:"archStyle", keys:["arch","hosting","arch_notes"]},
-  {id:"identity", keys:["user_store","auth_engine","token","mfa","identity_notes"]},
-  {id:"authz", keys:["rbac","action_auth","data_auth","authz_notes"]},
-  {id:"comms", keys:["tls","mtls","api_gateway","comms_notes"]},
-  {id:"code", keys:["input_validation","sql","secret_handling","mask","code_notes"]},
-  {id:"data", keys:["class","encrypt","data_residency","data_mask","data_notes"]},
-  {id:"thirdparty", keys:["third_party_types","vendor_assessment","dependency_scan","thirdparty_notes"]},
-  {id:"sdlc", keys:["sast","sca","secret_scan","training","approved_tools","sdlc_notes"]},
-  {id:"testing", keys:["dast","pentest","bug_bounty","testing_notes"]},
-  {id:"prod", keys:["waf","monitor","ir","alerting","prod_notes"]},
-  {id:"resilience", keys:["backup","rto","rpo","dr_plan","ha","resilience_notes"]},
-  {id:"compliance", keys:["regulations","data_residency_compliance","audit_logging","compliance_notes"]}
-];
-
-// Which fields are N/A for which architectures, and why
-const ARCH_NA = {
-  mtls: {
-    Monolith: "mTLS is used for service-to-service communication. A Monolith has no separate services so this does not apply.",
-    Serverless: "API Gateway handles all communication in Serverless — mTLS between functions is not applicable."
-  },
-  api_gateway: {
-    Monolith: "API Gateways are typically used with Microservices or Serverless. A Monolith usually handles routing internally."
-  },
-  ha: {
-    Monolith: "High availability in a Monolith requires full replication of the single application — less common but not impossible."
-  }
-};
-
+<script type="text/javascript">
 // Full field guide per step — what each field and its options mean
-const FIELD_GUIDE = {
+window.FIELD_GUIDE = {
   tm1: [
     {key:"tm_goal", name:"System Purpose", desc:"Describe what this system does in plain English. This sets the context for all security decisions that follow."},
     {key:"tm_users", name:"Who Uses It", desc:"Select everyone who will interact with this system.", options:[
@@ -545,21 +475,104 @@ const FIELD_GUIDE = {
     ]}
   ]
 };
+;
+</script>
+<script type="text/babel">
+const {useState, useCallback} = React;
 
+const SECTION_ICONS = {
+  tm1:"🎯",tm2:"⚠️",archStyle:"🏗️",identity:"🔐",authz:"🛡️",
+  comms:"🔒",code:"💻",data:"🗄️",sdlc:"🔄",testing:"🧪",
+  prod:"🚀",thirdparty:"🔗",resilience:"♻️",compliance:"📋"
+};
+
+const STEP_LABELS = {
+  tm1:"Threat Modelling – What Are We Building?", tm2:"Threat Modelling – What Can Go Wrong?",
+  archStyle:"Architecture Style", identity:"Identity & Authentication", authz:"Authorisation",
+  comms:"Secure Communications", code:"Secure Code", data:"Secure Data",
+  thirdparty:"Third Party & Supply Chain Risk", sdlc:"Secure SDLC",
+  testing:"Security Testing", prod:"Production Security",
+  resilience:"Resilience & Recovery", compliance:"Compliance & Regulatory"
+};
+
+const FIELD_LABELS = {
+  tm_goal:"System Purpose", tm_users:"Users", tm_value:"What Needs Protecting",
+  tm_weak:"Weak Spots", tm_threats:"Threat Types",
+  arch:"Architecture Style", hosting:"Hosting",
+  user_store:"User Store", auth_engine:"Auth Method", token:"Token Type", mfa:"MFA",
+  rbac:"User Roles", action_auth:"Permission Controls", data_auth:"Data Access Model",
+  tls:"TLS Version", mtls:"mTLS", api_gateway:"API Gateway",
+  input_validation:"Input Validation", sql:"SQL Protection",
+  secret_handling:"Secrets Handling", mask:"Mask Logs",
+  class:"Data Classification", encrypt:"Encrypted at Rest",
+  data_residency:"Data Residency", data_mask:"Mask Sensitive Data",
+  third_party_types:"Third-Party Integrations", vendor_assessment:"Vendor Assessment",
+  dependency_scan:"Dependency Scanning",
+  sast:"SAST", sca:"SCA", secret_scan:"Secrets Scanning",
+  training:"Security Training", approved_tools:"Approved Tools",
+  dast:"DAST", pentest:"Pen Test Frequency", bug_bounty:"Bug Bounty",
+  waf:"WAF", monitor:"Monitoring / SIEM", ir:"Incident Response Plan", alerting:"Automated Alerting",
+  backup:"Backup Strategy", rto:"RTO", rpo:"RPO", dr_plan:"DR Plan", ha:"High Availability",
+  regulations:"Regulations / Standards", data_residency_compliance:"Data Residency Obligation",
+  audit_logging:"Audit Logging"
+};
+
+const SECTIONS = [
+  {id:"tm1", keys:["tm_goal","tm_users","tm_value","tm1_notes"]},
+  {id:"tm2", keys:["tm_weak","tm_threats","tm2_notes"]},
+  {id:"archStyle", keys:["arch","hosting","arch_notes"]},
+  {id:"identity", keys:["user_store","auth_engine","token","mfa","identity_notes"]},
+  {id:"authz", keys:["rbac","action_auth","data_auth","authz_notes"]},
+  {id:"comms", keys:["tls","mtls","api_gateway","comms_notes"]},
+  {id:"code", keys:["input_validation","sql","secret_handling","mask","code_notes"]},
+  {id:"data", keys:["class","encrypt","data_residency","data_mask","data_notes"]},
+  {id:"thirdparty", keys:["third_party_types","vendor_assessment","dependency_scan","thirdparty_notes"]},
+  {id:"sdlc", keys:["sast","sca","secret_scan","training","approved_tools","sdlc_notes"]},
+  {id:"testing", keys:["dast","pentest","bug_bounty","testing_notes"]},
+  {id:"prod", keys:["waf","monitor","ir","alerting","prod_notes"]},
+  {id:"resilience", keys:["backup","rto","rpo","dr_plan","ha","resilience_notes"]},
+  {id:"compliance", keys:["regulations","data_residency_compliance","audit_logging","compliance_notes"]}
+];
+
+// Which fields are N/A for which architectures, and why
+const ARCH_NA = {
+  mtls: {
+    Monolith: "mTLS is used for service-to-service communication. A Monolith has no separate services so this does not apply.",
+    Serverless: "API Gateway handles all communication in Serverless — mTLS between functions is not applicable."
+  },
+  api_gateway: {
+    Monolith: "API Gateways are typically used with Microservices or Serverless. A Monolith usually handles routing internally."
+  },
+  ha: {
+    Monolith: "High availability in a Monolith requires full replication of the single application — less common but not impossible."
+  }
+};
+
+// FIELD_GUIDE defined in window.FIELD_GUIDE above
+  const FIELD_GUIDE = window.FIELD_GUIDE;
 function MultiSelect({options, value, onChange}) {
-  const selected = value ? value.split(", ").filter(Boolean) : [];
-  const toggle = (opt) => {
-    const next = selected.includes(opt) ? selected.filter(s=>s!==opt) : [...selected, opt];
-    onChange(next.join(", "));
+  const selected = (value && typeof value === 'string' && value.trim()) ? value.split("|").filter(Boolean) : [];
+  const handleChange = (opt, checked) => {
+    const next = checked ? [...selected, opt] : selected.filter(s=>s!==opt);
+    onChange(next.join("|"));
   };
   return (
     <div className="multi-select">
-      {options.map(opt=>(
-        <div key={opt} className={`multi-option ${selected.includes(opt)?'selected':''}`} onClick={()=>toggle(opt)}>
-          <div className="multi-check">{selected.includes(opt)?'✓':''}</div>
-          {opt}
-        </div>
-      ))}
+      {options.map(opt=>{
+        const isSelected = selected.includes(opt);
+        return (
+          <label key={opt} className={`multi-option ${isSelected?'selected':''}`} style={{cursor:'pointer'}}>
+            <input
+              type="checkbox"
+              checked={isSelected}
+              onChange={e=>handleChange(opt, e.target.checked)}
+              style={{position:'absolute',opacity:0,width:0,height:0}}
+            />
+            <div className="multi-check">{isSelected?'✓':''}</div>
+            {opt}
+          </label>
+        );
+      })}
     </div>
   );
 }
@@ -674,7 +687,7 @@ Score is out of 10. Include 2-5 risks, 2-4 recommendations, 2-3 positives. Be sp
           <div style={{flex:1,minWidth:'200px'}}>
             <div style={{display:'flex',alignItems:'center',gap:'8px',marginBottom:'6px'}}>
               <div style={{width:'28px',height:'28px',background:'linear-gradient(135deg,#0ea5e9,#38bdf8)',borderRadius:'8px',display:'flex',alignItems:'center',justifyContent:'center',fontSize:'14px'}}>✦</div>
-              <div style={{fontFamily:'Syne,sans-serif',fontSize:'16px',fontWeight:'700',color:'white'}}>AI Security Review</div>
+              <div style={{fontFamily:'Plus Jakarta Sans,sans-serif',fontSize:'16px',fontWeight:'700',color:'white'}}>AI Security Review</div>
             </div>
             <div style={{fontSize:'12px',color:'rgba(255,255,255,0.55)',lineHeight:'1.5',maxWidth:'400px'}}>
               Analyses your architecture decisions and flags risks, inconsistencies, and recommendations. Your client name is never sent.
@@ -731,7 +744,7 @@ Score is out of 10. Include 2-5 risks, 2-4 recommendations, 2-3 positives. Be sp
             {/* Score + overall */}
             <div style={{display:'flex',alignItems:'center',gap:'16px',marginBottom:'16px',flexWrap:'wrap'}}>
               <div style={{background:'rgba(255,255,255,0.07)',border:'1px solid rgba(255,255,255,0.12)',borderRadius:'12px',padding:'12px 20px',display:'flex',alignItems:'center',gap:'12px'}}>
-                <div style={{fontFamily:'Syne,sans-serif',fontSize:'32px',fontWeight:'800',color:aiResult.score>=8?'#4ade80':aiResult.score>=5?'#fbbf24':'#f87171',lineHeight:1}}>{aiResult.score}</div>
+                <div style={{fontFamily:'Plus Jakarta Sans,sans-serif',fontSize:'32px',fontWeight:'800',color:aiResult.score>=8?'#4ade80':aiResult.score>=5?'#fbbf24':'#f87171',lineHeight:1}}>{aiResult.score}</div>
                 <div>
                   <div style={{fontSize:'10px',color:'rgba(255,255,255,0.4)',textTransform:'uppercase',letterSpacing:'0.5px'}}>Security Score</div>
                   <div style={{fontSize:'11px',color:'rgba(255,255,255,0.6)'}}>out of 10</div>
@@ -988,7 +1001,7 @@ function SecureBlueprint() {
     sql:"Parameterised queries", secret_handling:"Secrets Manager (e.g. AWS, Azure)",
     mask:"Yes", tls:"TLS 1.3 (recommended)", mtls:"No", api_gateway:"Yes",
     class:"Internal", encrypt:"Yes", data_residency:"No restriction", data_mask:"Yes",
-    vendor_assessment:"Yes – formal assessment process", dependency_scan:"Yes – automated (SCA tool)",
+    third_party_types:"Cloud services (AWS, Azure, GCP)", vendor_assessment:"Yes – formal assessment process", dependency_scan:"Yes – automated (SCA tool)",
     sast:"Yes", sca:"Yes", secret_scan:"Yes", training:"Yes – regular training",
     approved_tools:"Yes", dast:"Yes", pentest:"Annually", bug_bounty:"No",
     waf:"Yes", monitor:"Yes", ir:"Yes", alerting:"Yes",
@@ -1027,8 +1040,16 @@ function SecureBlueprint() {
         {f.type==='text' && <input className="field-input" value={state[f.key]||''} onChange={e=>updateField(f.key,e.target.value)} placeholder={f.placeholder||''}/>}
         {f.type==='textarea' && <textarea className="field-textarea" value={state[f.key]||''} onChange={e=>updateField(f.key,e.target.value)} placeholder={f.placeholder||''}/>}
         {f.type==='select' && <select className="field-select" value={state[f.key]||''} onChange={e=>updateField(f.key,e.target.value)}>{f.options.map(o=><option key={o} value={o}>{o}</option>)}</select>}
-        {f.type==='multiselect' && <MultiSelect options={f.options} value={state[f.key]||''} onChange={v=>updateField(f.key,v)}/>}
-        {isGreyed && <div className="not-applicable-note">ℹ️ Not applicable for {arch}: {naReason}</div>}
+        {f.type==='multiselect' && <MultiSelect options={f.options} value={state[f.key]||''} onChange={v=>updateField(f.key,v)} key={f.key}/>}
+        {isGreyed && (
+          <div className="not-applicable-note">
+            <span style={{fontSize:'16px',flexShrink:0}}>⚠️</span>
+            <div>
+              <div style={{fontWeight:'700',marginBottom:'2px'}}>Not applicable for {arch} architecture</div>
+              <div>{naReason}</div>
+            </div>
+          </div>
+        )}
       </div>
     );
   }
