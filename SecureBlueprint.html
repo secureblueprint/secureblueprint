@@ -577,7 +577,7 @@ function MultiSelect({options, value, onChange}) {
   );
 }
 
-function SummaryPage({state, clientName, onClientNameChange, onReset, onDownloadPDF, onDownloadTxt, onOpenEmail}) {
+function SummaryPage({state, clientName, onClientNameChange, onReset, onDownloadPDF, onDownloadTxt, onOpenEmail, onRunAIReview}) {
   const [licenceKey, setLicenceKey] = React.useState('');
   const [aiLoading, setAiLoading] = React.useState(false);
   const [aiResult, setAiResult] = React.useState(null);
@@ -706,7 +706,7 @@ Score is out of 10. Include 2-5 risks, 2-4 recommendations, 2-3 positives. Be sp
               </div>
             )}
             <button
-              onClick={()=>setShowPrivacyModal(true)}
+              onClick={onRunAIReview}
               disabled={aiLoading}
               style={{background:aiLoading?'rgba(14,165,233,0.3)':'linear-gradient(135deg,#0ea5e9,#38bdf8)',color:'white',border:'none',padding:'10px 20px',borderRadius:'8px',fontSize:'13px',fontWeight:'700',cursor:aiLoading?'not-allowed':'pointer',fontFamily:'DM Sans,sans-serif',display:'flex',alignItems:'center',gap:'8px',whiteSpace:'nowrap'}}
             >
@@ -1248,6 +1248,7 @@ function SecureBlueprint() {
                 onDownloadPDF={downloadPDF}
                 onDownloadTxt={downloadTxt}
                 onOpenEmail={openEmail}
+                onRunAIReview={()=>setShowPrivacyModal(true)}
               />
             </div>
           ):(
