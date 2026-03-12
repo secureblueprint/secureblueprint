@@ -577,7 +577,7 @@ function MultiSelect({options, value, onChange}) {
   );
 }
 
-function SummaryPage({state, clientName, onClientNameChange, onReset, onDownloadPDF, onDownloadTxt, onOpenEmail) {
+function SummaryPage({state, clientName, onClientNameChange, onReset, onDownloadPDF, onDownloadTxt, onOpenEmail}) {
   const [licenceKey, setLicenceKey] = React.useState('');
   const [aiLoading, setAiLoading] = React.useState(false);
   const [aiResult, setAiResult] = React.useState(null);
