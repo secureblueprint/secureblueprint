@@ -11,9 +11,27 @@ const MONTHLY_LIMIT = 50;
 // For production, replace with Upstash Redis
 const usageCounts = {};
 
+// Notes fields that are stripped for privacy before sending to AI
+const NOTES_FIELDS = [
+  'tm1_notes', 'tm2_notes', 'arch_notes', 'identity_notes', 'authz_notes',
+  'comms_notes', 'code_notes', 'data_notes', 'thirdparty_notes', 'sdlc_notes',
+  'testing_notes', 'prod_notes', 'resilience_notes', 'compliance_notes'
+];
+
 function getCurrentMonth() {
   const now = new Date();
   return `${now.getFullYear()}-${now.getMonth() + 1}`;
+}
+
+function sanitiseAnswers(answers) {
+  if (!answers || typeof answers !== 'object') return answers;
+  const clean = { ...answers };
+  // Remove client name
+  delete clean.clientName;
+  delete clean.client_name;
+  // Remove all notes fields
+  NOTES_FIELDS.forEach(field => delete clean[field]);
+  return clean;
 }
 
 export default async function handler(req, res) {
