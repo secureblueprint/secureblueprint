@@ -627,8 +627,6 @@ Score is out of 10. Include 2-5 risks, 2-4 recommendations, 2-3 positives. Be sp
 
   async function runAiReview() {
     if (!licenceKey.trim()) { setShowKeyInput(true); return; }
-    setShowPrivacyModal(true);
-    return;
     setAiLoading(true);
     setAiError(null);
     setAiResult(null);
@@ -708,7 +706,7 @@ Score is out of 10. Include 2-5 risks, 2-4 recommendations, 2-3 positives. Be sp
               </div>
             )}
             <button
-              onClick={runAiReview}
+              onClick={()=>setShowPrivacyModal(true)}
               disabled={aiLoading}
               style={{background:aiLoading?'rgba(14,165,233,0.3)':'linear-gradient(135deg,#0ea5e9,#38bdf8)',color:'white',border:'none',padding:'10px 20px',borderRadius:'8px',fontSize:'13px',fontWeight:'700',cursor:aiLoading?'not-allowed':'pointer',fontFamily:'DM Sans,sans-serif',display:'flex',alignItems:'center',gap:'8px',whiteSpace:'nowrap'}}
             >
@@ -1334,7 +1332,7 @@ function SecureBlueprint() {
             </div>
             <div style={{display:'flex',gap:'12px'}}>
               <button onClick={()=>setShowPrivacyModal(false)} style={{flex:1,padding:'12px',border:'1.5px solid #d0dcea',borderRadius:'8px',background:'white',color:'#4a6080',fontSize:'14px',fontWeight:'600',cursor:'pointer'}}>Cancel</button>
-              <button onClick={()=>{setShowPrivacyModal(false);runAIReview();}} style={{flex:2,padding:'12px',border:'none',borderRadius:'8px',background:'linear-gradient(135deg,#0ea5e9,#38bdf8)',color:'white',fontSize:'14px',fontWeight:'700',cursor:'pointer'}}>Got it — run my review ✦</button>
+              <button onClick={()=>{setShowPrivacyModal(false);runAiReview();}} style={{flex:2,padding:'12px',border:'none',borderRadius:'8px',background:'linear-gradient(135deg,#0ea5e9,#38bdf8)',color:'white',fontSize:'14px',fontWeight:'700',cursor:'pointer'}}>Got it — run my review ✦</button>
             </div>
           </div>
         </div>
