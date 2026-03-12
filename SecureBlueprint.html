@@ -577,7 +577,7 @@ function MultiSelect({options, value, onChange}) {
   );
 }
 
-function SummaryPage({state, clientName, onClientNameChange, onReset, onDownloadPDF, onDownloadTxt, onOpenEmail, onRunAIReview}) {
+function SummaryPage({state, clientName, onClientNameChange, onReset, onDownloadPDF, onDownloadTxt, onOpenEmail) {
   const [licenceKey, setLicenceKey] = React.useState('');
   const [aiLoading, setAiLoading] = React.useState(false);
   const [aiResult, setAiResult] = React.useState(null);
@@ -705,8 +705,11 @@ Score is out of 10. Include 2-5 risks, 2-4 recommendations, 2-3 positives. Be sp
                 />
               </div>
             )}
+            <div style={{fontSize:'11px',color:'rgba(255,255,255,0.4)',textAlign:'right',maxWidth:'280px',lineHeight:'1.5',marginBottom:'4px'}}>
+              🔒 Client name &amp; notes fields are excluded before sending to AI
+            </div>
             <button
-              onClick={onRunAIReview}
+              onClick={runAiReview}
               disabled={aiLoading}
               style={{background:aiLoading?'rgba(14,165,233,0.3)':'linear-gradient(135deg,#0ea5e9,#38bdf8)',color:'white',border:'none',padding:'10px 20px',borderRadius:'8px',fontSize:'13px',fontWeight:'700',cursor:aiLoading?'not-allowed':'pointer',fontFamily:'DM Sans,sans-serif',display:'flex',alignItems:'center',gap:'8px',whiteSpace:'nowrap'}}
             >
@@ -1013,7 +1016,6 @@ function SecureBlueprint() {
   const [state, setState] = useState(defaultState);
   const [stepIndex, setStepIndex] = useState(0);
   const [showResetModal, setShowResetModal] = useState(false);
-  const [showPrivacyModal, setShowPrivacyModal] = React.useState(false);
   const [clientName, setClientName] = useState('');
   const current = steps[stepIndex];
   const totalSteps = steps.length;
@@ -1248,7 +1250,6 @@ function SecureBlueprint() {
                 onDownloadPDF={downloadPDF}
                 onDownloadTxt={downloadTxt}
                 onOpenEmail={openEmail}
-                onRunAIReview={()=>setShowPrivacyModal(true)}
               />
             </div>
           ):(
@@ -1311,33 +1312,6 @@ function SecureBlueprint() {
         {!current.isSummary&&<Sidebar/>}
       </div>
 
-      {showPrivacyModal&&(
-        <div style={{position:'fixed',inset:0,background:'rgba(0,0,0,0.75)',zIndex:1000,display:'flex',alignItems:'center',justifyContent:'center',padding:'24px'}}>
-          <div style={{background:'white',borderRadius:'16px',padding:'32px',maxWidth:'480px',width:'100%',boxShadow:'0 24px 64px rgba(0,0,0,0.3)'}}>
-            <div style={{display:'flex',alignItems:'center',gap:'12px',marginBottom:'20px'}}>
-              <div style={{width:'40px',height:'40px',background:'linear-gradient(135deg,#0ea5e9,#38bdf8)',borderRadius:'10px',display:'flex',alignItems:'center',justifyContent:'center',fontSize:'20px',flexShrink:0}}>🔒</div>
-              <div>
-                <div style={{fontFamily:"'Plus Jakarta Sans',sans-serif",fontSize:'18px',fontWeight:'700',color:'#0f2240'}}>Before your AI review runs</div>
-                <div style={{fontSize:'13px',color:'#8899aa',marginTop:'2px'}}>Please read before continuing</div>
-              </div>
-            </div>
-            <div style={{background:'#f0f4f8',borderRadius:'10px',padding:'16px',marginBottom:'16px'}}>
-              <div style={{fontSize:'13px',fontWeight:'700',color:'#0f2240',marginBottom:'10px'}}>Automatically excluded before sending to AI:</div>
-              <div style={{display:'flex',flexDirection:'column',gap:'8px'}}>
-                <div style={{display:'flex',alignItems:'center',gap:'8px',fontSize:'13px',color:'#4a6080'}}><span style={{color:'#0ea5e9',fontWeight:'700'}}>✓</span> Client name</div>
-                <div style={{display:'flex',alignItems:'center',gap:'8px',fontSize:'13px',color:'#4a6080'}}><span style={{color:'#0ea5e9',fontWeight:'700'}}>✓</span> All additional notes fields across every step</div>
-              </div>
-            </div>
-            <div style={{background:'#fff8e6',border:'1px solid #f59e0b',borderRadius:'8px',padding:'12px',marginBottom:'24px',fontSize:'12px',color:'#92400e',lineHeight:'1.5'}}>
-              ⚠️ Please ensure you have not entered sensitive details such as passwords, API keys, or confidential system names in any other fields.
-            </div>
-            <div style={{display:'flex',gap:'12px'}}>
-              <button onClick={()=>setShowPrivacyModal(false)} style={{flex:1,padding:'12px',border:'1.5px solid #d0dcea',borderRadius:'8px',background:'white',color:'#4a6080',fontSize:'14px',fontWeight:'600',cursor:'pointer'}}>Cancel</button>
-              <button onClick={()=>{setShowPrivacyModal(false);runAiReview();}} style={{flex:2,padding:'12px',border:'none',borderRadius:'8px',background:'linear-gradient(135deg,#0ea5e9,#38bdf8)',color:'white',fontSize:'14px',fontWeight:'700',cursor:'pointer'}}>Got it — run my review ✦</button>
-            </div>
-          </div>
-        </div>
-      )}
       {showResetModal&&(
         <div className="modal-overlay">
           <div className="modal">
