@@ -342,6 +342,51 @@ footer {
   .step-num { font-size: 32px; }
   footer { padding: 24px 20px; flex-direction: column; text-align: center; }
 }
+
+/* ── SAMPLE REPORT ── */
+.sample-report { background: rgba(255,255,255,0.02); border-top: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05); }
+.report-preview {
+  background: white; border-radius: 16px; overflow: hidden;
+  box-shadow: 0 32px 80px rgba(0,0,0,0.4);
+  margin-top: 56px; max-width: 800px; margin-left: auto; margin-right: auto;
+}
+.report-header {
+  background: linear-gradient(135deg, #0f2240, #1e3a5f);
+  padding: 24px 28px; display: flex; align-items: center; justify-content: space-between; flex-wrap: gap;
+}
+.report-header-left { display: flex; align-items: center; gap: 12px; }
+.report-logo { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 16px; font-weight: 800; color: white; display: flex; align-items: center; gap: 8px; }
+.report-logo span { color: #38bdf8; }
+.report-label { font-size: 11px; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px; }
+.report-score-badge {
+  background: rgba(14,165,233,0.15); border: 1px solid rgba(14,165,233,0.3);
+  border-radius: 10px; padding: 10px 18px; text-align: center;
+}
+.report-score-num { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 28px; font-weight: 800; color: #38bdf8; line-height: 1; }
+.report-score-label { font-size: 10px; color: rgba(255,255,255,0.4); margin-top: 2px; }
+.report-body { padding: 24px 28px; }
+.report-summary { font-size: 13px; color: #4a6080; line-height: 1.6; margin-bottom: 20px; font-style: italic; border-left: 3px solid #0ea5e9; padding-left: 12px; }
+.report-section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: #0f2240; margin-bottom: 10px; }
+.report-positives { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+.report-positive { display: flex; align-items: flex-start; gap: 8px; font-size: 13px; color: #166534; background: #f0fdf4; border-radius: 6px; padding: 8px 10px; }
+.report-risks { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+.report-risk { border-radius: 8px; overflow: hidden; }
+.report-risk-header { display: flex; align-items: center; gap: 8px; padding: 8px 12px; }
+.risk-high .report-risk-header { background: #fef2f2; }
+.risk-medium .report-risk-header { background: #fff8e6; }
+.risk-low .report-risk-header { background: #f0f4f8; }
+.risk-badge { font-size: 10px; font-weight: 700; text-transform: uppercase; padding: 2px 8px; border-radius: 4px; }
+.risk-high .risk-badge { background: #dc2626; color: white; }
+.risk-medium .risk-badge { background: #f59e0b; color: white; }
+.risk-low .risk-badge { background: #64748b; color: white; }
+.risk-title { font-size: 13px; font-weight: 600; color: #0f2240; }
+.risk-desc { font-size: 12px; color: #4a6080; padding: 6px 12px 10px; line-height: 1.5; }
+.risk-high .risk-desc { background: #fef2f2; }
+.risk-medium .risk-desc { background: #fff8e6; }
+.risk-low .risk-desc { background: #f0f4f8; }
+.report-recs { display: flex; flex-direction: column; gap: 6px; }
+.report-rec { display: flex; align-items: flex-start; gap: 8px; font-size: 13px; color: #0f2240; padding: 8px 10px; background: #f8fafc; border-radius: 6px; border-left: 3px solid #0ea5e9; }
+.report-watermark { text-align: center; padding: 12px; font-size: 11px; color: #94a3b8; border-top: 1px solid #e2e8f0; }
 </style>
 </head>
 <body>
@@ -554,6 +599,70 @@ footer {
         <div class="who-role">Developers & Teams</div>
         <div class="who-title">Build security in from the start</div>
         <div class="who-text">Not a security specialist? SecureBlueprint explains every concept in plain English so development teams can make informed security decisions without needing an expert in the room.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- SAMPLE REPORT -->
+<section class="sample-report">
+  <div class="container">
+    <div class="section-label">See it in action</div>
+    <h2 class="section-title">A real AI security review</h2>
+    <p class="section-sub">This is actual output from SecureBlueprint — generated from a fintech startup's architecture in under 30 seconds.</p>
+
+    <div class="report-preview">
+      <div class="report-header">
+        <div class="report-header-left">
+          <div>
+            <div class="report-logo">🔷 Secure<span>Blueprint</span></div>
+            <div class="report-label">AI Security Review — Fintech Payments Platform</div>
+          </div>
+        </div>
+        <div class="report-score-badge">
+          <div class="report-score-num">6<span style="font-size:16px;color:rgba(56,189,248,0.6)">/10</span></div>
+          <div class="report-score-label">Security Score</div>
+        </div>
+      </div>
+      <div class="report-body">
+        <div class="report-summary">"A solid microservices foundation with good authentication controls, but critical gaps in service-to-service security and data classification put this fintech platform at significant risk before launch."</div>
+
+        <div class="report-section-title">✓ What you're doing well</div>
+        <div class="report-positives">
+          <div class="report-positive"><span>✓</span> Mandatory MFA with OIDC and JWT refresh tokens provides strong user authentication</div>
+          <div class="report-positive"><span>✓</span> SAST and secrets scanning in the CI/CD pipeline catches vulnerabilities before deployment</div>
+          <div class="report-positive"><span>✓</span> WAF and automated SIEM alerting provide solid production monitoring coverage</div>
+        </div>
+
+        <div class="report-section-title">⚠ Risks identified</div>
+        <div class="report-risks">
+          <div class="report-risk risk-high">
+            <div class="report-risk-header"><span class="risk-badge">High</span><span class="risk-title">No mTLS between microservices</span></div>
+            <div class="risk-desc">Without mutual TLS, a compromised service can impersonate others internally. For a payments platform handling card data, this is a critical gap that could allow lateral movement after a breach.</div>
+          </div>
+          <div class="report-risk risk-high">
+            <div class="report-risk-header"><span class="risk-badge">High</span><span class="risk-title">Payment data classified as Internal, not Regulated</span></div>
+            <div class="risk-desc">Card and transaction data requires PCI-DSS Regulated classification. Misclassification means inadequate controls and likely compliance failure at your next audit.</div>
+          </div>
+          <div class="report-risk risk-medium">
+            <div class="report-risk-header"><span class="risk-badge">Medium</span><span class="risk-title">No penetration testing scheduled</span></div>
+            <div class="risk-desc">Ad-hoc pen testing is insufficient for a regulated fintech. PCI-DSS requires annual penetration testing at minimum — schedule this before go-live.</div>
+          </div>
+          <div class="report-risk risk-low">
+            <div class="report-risk-header"><span class="risk-badge">Low</span><span class="risk-title">Disaster recovery plan not yet tested</span></div>
+            <div class="risk-desc">A documented DR plan that has never been tested provides false confidence. Run a tabletop exercise before launch.</div>
+          </div>
+        </div>
+
+        <div class="report-section-title">→ Top recommendations</div>
+        <div class="report-recs">
+          <div class="report-rec"><span>→</span> Implement mTLS between all microservices using a service mesh such as Istio or AWS App Mesh</div>
+          <div class="report-rec"><span>→</span> Reclassify payment and card data as Regulated and apply PCI-DSS controls immediately</div>
+          <div class="report-rec"><span>→</span> Book a penetration test before go-live — use a CREST-accredited provider for PCI compliance</div>
+        </div>
+
+        <div class="report-watermark">Generated by SecureBlueprint — secureblueprint.tech</div>
       </div>
     </div>
   </div>
