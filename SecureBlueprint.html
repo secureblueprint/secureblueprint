@@ -1016,6 +1016,10 @@ function SecureBlueprint() {
   const [state, setState] = useState(defaultState);
   const [stepIndex, setStepIndex] = useState(0);
   const [showResetModal, setShowResetModal] = useState(false);
+  const [showTrialPrompt, setShowTrialPrompt] = useState(false);
+  const [trialKey, setTrialKey] = useState('');
+  const [trialKeyError, setTrialKeyError] = useState('');
+  const [unlocked, setUnlocked] = useState(false);
   const [clientName, setClientName] = useState('');
   const current = steps[stepIndex];
   const totalSteps = steps.length;
@@ -1023,9 +1027,22 @@ function SecureBlueprint() {
   const arch = state.arch || "Monolith";
 
   const updateField = (k,v) => setState(p=>({...p,[k]:v}));
-  const next = () => setStepIndex(i=>Math.min(i+1,totalSteps-1));
+  const next = () => {
+    if (stepIndex === 5 && !unlocked) {
+      setShowTrialPrompt(true);
+      return;
+    }
+    setStepIndex(i=>Math.min(i+1,totalSteps-1));
+  };
   const back = () => setStepIndex(i=>Math.max(i-1,0));
-  const doReset = () => { setState(defaultState); setStepIndex(0); setShowResetModal(false); setClientName(''); };
+  const doReset = () => { setState(defaultState); setStepIndex(0); setShowResetModal(false); setClientName(''); setUnlocked(false); };
+  const handleTrialKey = () => {
+    if (!trialKey.trim()) { setTrialKeyError('Please enter your licence key.'); return; }
+    setUnlocked(true);
+    setShowTrialPrompt(false);
+    setTrialKeyError('');
+    setStepIndex(i=>Math.min(i+1,totalSteps-1));
+  };
   const handleClientName = useCallback(e=>setClientName(e.target.value),[]);
 
   // Check if a field is N/A for current architecture
@@ -1313,6 +1330,40 @@ function SecureBlueprint() {
         </div>
         {!current.isSummary&&<Sidebar/>}
       </div>
+
+      {showTrialPrompt&&(
+        <div style={{position:'fixed',inset:0,background:'rgba(0,0,0,0.75)',zIndex:1000,display:'flex',alignItems:'center',justifyContent:'center',padding:'24px'}}>
+          <div style={{background:'white',borderRadius:'16px',padding:'32px',maxWidth:'480px',width:'100%',boxShadow:'0 24px 64px rgba(0,0,0,0.3)'}}>
+            <div style={{display:'flex',alignItems:'center',gap:'12px',marginBottom:'20px'}}>
+              <div style={{width:'40px',height:'40px',background:'linear-gradient(135deg,#0ea5e9,#38bdf8)',borderRadius:'10px',display:'flex',alignItems:'center',justifyContent:'center',fontSize:'20px',flexShrink:0}}>✦</div>
+              <div>
+                <div style={{fontFamily:"'Plus Jakarta Sans',sans-serif",fontSize:'18px',fontWeight:'700',color:'#0f2240'}}>Unlock the full wizard</div>
+                <div style={{fontSize:'13px',color:'#8899aa',marginTop:'2px'}}>You've completed the first 6 steps</div>
+              </div>
+            </div>
+            <div style={{background:'#f0f4f8',borderRadius:'10px',padding:'16px',marginBottom:'16px'}}>
+              <div style={{fontSize:'13px',color:'#0f2240',lineHeight:'1.6'}}>Start your <strong>7-day free trial</strong> to unlock all 14 steps, the AI security review, and PDF report generation.</div>
+              <a href="https://buy.stripe.com/28E3cx0pkaL12D4dsF0oM00" style={{display:'block',marginTop:'12px',padding:'12px',background:'linear-gradient(135deg,#0ea5e9,#38bdf8)',color:'white',borderRadius:'8px',textAlign:'center',textDecoration:'none',fontWeight:'700',fontSize:'14px'}}>Start 7-Day Free Trial →</a>
+              <div style={{fontSize:'11px',color:'#8899aa',textAlign:'center',marginTop:'8px'}}>Then £49/month. Cancel anytime.</div>
+            </div>
+            <div style={{borderTop:'1px solid #e2e8f0',paddingTop:'16px'}}>
+              <div style={{fontSize:'12px',fontWeight:'600',color:'#4a6080',marginBottom:'8px'}}>Already have a licence key?</div>
+              <div style={{display:'flex',gap:'8px'}}>
+                <input
+                  type="text"
+                  placeholder="Paste your licence key..."
+                  value={trialKey}
+                  onChange={e=>{setTrialKey(e.target.value);setTrialKeyError('');}}
+                  style={{flex:1,border:'1.5px solid #d0dcea',borderRadius:'8px',padding:'10px 12px',fontSize:'13px',fontFamily:"'DM Sans',sans-serif",outline:'none'}}
+                />
+                <button onClick={handleTrialKey} style={{padding:'10px 16px',background:'#0f2240',color:'white',border:'none',borderRadius:'8px',fontSize:'13px',fontWeight:'600',cursor:'pointer'}}>Unlock</button>
+              </div>
+              {trialKeyError && <div style={{fontSize:'12px',color:'#dc2626',marginTop:'6px'}}>{trialKeyError}</div>}
+            </div>
+            <button onClick={()=>setShowTrialPrompt(false)} style={{marginTop:'16px',width:'100%',padding:'10px',border:'1.5px solid #d0dcea',borderRadius:'8px',background:'white',color:'#8899aa',fontSize:'13px',cursor:'pointer'}}>← Go back</button>
+          </div>
+        </div>
+      )}
 
       {showResetModal&&(
         <div className="modal-overlay">
