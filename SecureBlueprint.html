@@ -1195,11 +1195,15 @@ function SecureBlueprint() {
         doc.setFontSize(8.5); doc.setTextColor(15,34,64); doc.setFont('helvetica','bold');
         doc.text('Recommendations',margin,y); y+=6;
         aiResult.recommendations.forEach(rec=>{
-          if(y>268){y=addPage();}
-          doc.setFontSize(7.5); doc.setTextColor(74,96,128); doc.setFont('helvetica','normal');
-          const recText='→ '+(rec.title||'')+(rec.detail?' — '+rec.detail:'');
-          const recLines=doc.splitTextToSize(recText,contentW-4);
-          doc.text(recLines,margin+2,y); y+=recLines.length*4+3;
+          if(y>265){y=addPage();}
+          doc.setFontSize(8); doc.setTextColor(14,165,233); doc.setFont('helvetica','bold');
+          const titleLines=doc.splitTextToSize('→ '+(rec.title||''),contentW-4);
+          doc.text(titleLines,margin+2,y); y+=titleLines.length*5;
+          if(rec.detail){
+            doc.setFontSize(7.5); doc.setTextColor(74,96,128); doc.setFont('helvetica','normal');
+            const detLines=doc.splitTextToSize(rec.detail,contentW-6);
+            doc.text(detLines,margin+4,y); y+=detLines.length*4+4;
+          }
         });
       }
     }
