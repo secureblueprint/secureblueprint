@@ -1191,6 +1191,7 @@ function SecureBlueprint() {
 
       // Recommendations
       if(aiResult.recommendations && aiResult.recommendations.length){
+        y+=4;
         if(y>255){y=addPage();}
         doc.setFontSize(8.5); doc.setTextColor(15,34,64); doc.setFont('helvetica','bold');
         doc.text('Recommendations',margin,y); y+=6;
