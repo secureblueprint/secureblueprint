@@ -577,7 +577,7 @@ function MultiSelect({options, value, onChange}) {
   );
 }
 
-function SummaryPage({state, clientName, onClientNameChange, onReset, onDownloadPDF, onDownloadTxt, onOpenEmail}) {
+function SummaryPage({state, clientName, onClientNameChange, onReset, onDownloadPDF, onDownloadTxt, onOpenEmail, onRunAIReview}) {
   const [licenceKey, setLicenceKey] = React.useState('');
   const [aiLoading, setAiLoading] = React.useState(false);
   const [aiResult, setAiResult] = React.useState(null);
@@ -664,9 +664,9 @@ Score is out of 10. Include 2-5 risks, 2-4 recommendations, 2-3 positives. Be sp
           <span className="tag">✦ {state.class||'Data'}</span>
         </div>
         <div className="summary-banner-actions">
-          <button onClick={onDownloadPDF} className="btn btn-pdf">📄 Download PDF</button>
-          <button onClick={onDownloadTxt} className="btn btn-download">📃 Download TXT</button>
-          <button onClick={onOpenEmail} className="btn btn-primary">✉ Email Summary</button>
+          <button onClick={()=>onDownloadPDF(aiResult)} className="btn btn-pdf">📄 Download PDF</button>
+          <button onClick={()=>onDownloadTxt(aiResult)} className="btn btn-download">📃 Download TXT</button>
+          <button onClick={()=>onOpenEmail(aiResult)} className="btn btn-primary">✉ Email Summary</button>
           <button onClick={onReset} className="btn" style={{background:'rgba(255,255,255,0.1)',color:'white',border:'1px solid rgba(255,255,255,0.2)'}}>↺ Start Over</button>
         </div>
       </div>
@@ -1074,7 +1074,7 @@ function SecureBlueprint() {
     );
   }
 
-  function downloadPDF() {
+  function downloadPDF(aiResult) {
     const {jsPDF}=window.jspdf;
     const doc=new jsPDF({orientation:'portrait',unit:'mm',format:'a4'});
     const pageW=210,pageH=297,margin=20,contentW=pageW-margin*2;
@@ -1147,10 +1147,65 @@ function SecureBlueprint() {
       });
       y+=5;
     });
+    // Add AI Review section if available
+    if (aiResult) {
+      if(y>220){y=addPage();}
+      doc.setFillColor(15,34,64); doc.roundedRect(margin,y,contentW,9,2,2,'F');
+      doc.setFillColor(14,165,233); doc.roundedRect(margin,y,4,9,2,2,'F');
+      doc.setFontSize(8.5); doc.setTextColor(255,255,255); doc.setFont('helvetica','bold');
+      doc.text('AI SECURITY REVIEW',margin+7,y+6); y+=13;
+
+      // Score
+      doc.setFontSize(11); doc.setTextColor(14,165,233); doc.setFont('helvetica','bold');
+      doc.text('Security Score: '+aiResult.score+'/10',margin,y); y+=8;
+
+      // Summary
+      if(aiResult.summary){
+        doc.setFontSize(8); doc.setTextColor(74,96,128); doc.setFont('helvetica','italic');
+        const sumLines=doc.splitTextToSize(aiResult.summary,contentW);
+        doc.text(sumLines,margin,y); y+=sumLines.length*5+4;
+      }
+
+      // Risks
+      if(aiResult.risks && aiResult.risks.length){
+        doc.setFontSize(8.5); doc.setTextColor(15,34,64); doc.setFont('helvetica','bold');
+        doc.text('Risks Identified',margin,y); y+=6;
+        aiResult.risks.forEach(risk=>{
+          if(y>265){y=addPage();}
+          const sev=risk.severity||'medium';
+          const col=sev==='high'?[220,38,38]:sev==='medium'?[217,119,6]:[100,116,139];
+          doc.setFillColor(col[0],col[1],col[2]);
+          doc.roundedRect(margin,y,18,5,1,1,'F');
+          doc.setFontSize(6.5); doc.setTextColor(255,255,255); doc.setFont('helvetica','bold');
+          doc.text(sev.toUpperCase(),margin+9,y+3.5,{align:'center'});
+          doc.setFontSize(8); doc.setTextColor(15,34,64); doc.setFont('helvetica','bold');
+          doc.text(risk.title||'',margin+22,y+3.5);
+          y+=7;
+          if(risk.description){
+            doc.setFont('helvetica','normal'); doc.setTextColor(74,96,128); doc.setFontSize(7.5);
+            const rLines=doc.splitTextToSize(risk.description,contentW-4);
+            doc.text(rLines,margin+2,y); y+=rLines.length*4+3;
+          }
+        });
+      }
+
+      // Recommendations
+      if(aiResult.recommendations && aiResult.recommendations.length){
+        if(y>255){y=addPage();}
+        doc.setFontSize(8.5); doc.setTextColor(15,34,64); doc.setFont('helvetica','bold');
+        doc.text('Recommendations',margin,y); y+=6;
+        aiResult.recommendations.forEach(rec=>{
+          if(y>268){y=addPage();}
+          doc.setFontSize(7.5); doc.setTextColor(74,96,128); doc.setFont('helvetica','normal');
+          const recLines=doc.splitTextToSize('→ '+(rec.action||rec),contentW-4);
+          doc.text(recLines,margin+2,y); y+=recLines.length*4+3;
+        });
+      }
+    }
     doc.save('secureblueprint-report.pdf');
   }
 
-  function downloadTxt() {
+  function downloadTxt(aiResult) {
     let text="SECUREBLUEPRINT – SECURITY ARCHITECTURE SUMMARY\n"+"=".repeat(50)+"\n";
     if(clientName) text+=`Client: ${clientName}\n`;
     text+=`Date: ${new Date().toLocaleDateString('en-GB')}\nArchitecture: ${state.arch||'Not specified'}\n\n`;
@@ -1159,7 +1214,21 @@ function SecureBlueprint() {
       section.keys.forEach(key=>{const v=state[key];if(v)text+=`${key.includes("_notes")?"Notes":FIELD_LABELS[key]||key}: ${v}\n`;});
       text+="\n";
     });
-    text+="\n" + "=".repeat(50) + "\nGenerated by SecureBlueprint — secureblueprint.io\n";
+    if(aiResult){
+      text+="\nAI SECURITY REVIEW\n"+"=".repeat(50)+"\n";
+      text+="Security Score: "+aiResult.score+"/10\n\n";
+      if(aiResult.summary) text+="Summary: "+aiResult.summary+"\n\n";
+      if(aiResult.risks && aiResult.risks.length){
+        text+="RISKS IDENTIFIED\n"+"-".repeat(40)+"\n";
+        aiResult.risks.forEach(r=>{ text+="["+((r.severity||"medium").toUpperCase())+"] "+r.title+"\n"+(r.description||"")+"\n\n"; });
+      }
+      if(aiResult.recommendations && aiResult.recommendations.length){
+        text+="RECOMMENDATIONS\n"+"-".repeat(40)+"\n";
+        aiResult.recommendations.forEach(r=>{ text+="→ "+(r.action||r)+"\n"; });
+        text+="\n";
+      }
+    }
+    text+="\n" + "=".repeat(50) + "\nGenerated by SecureBlueprint — secureblueprint.tech\n";
     const blob=new Blob([text],{type:'text/plain'});
     const url=URL.createObjectURL(blob);
     const a=document.createElement('a');
@@ -1167,7 +1236,7 @@ function SecureBlueprint() {
     URL.revokeObjectURL(url);
   }
 
-  function openEmail() {
+  function openEmail(aiResult) {
     let body=`SecureBlueprint – Security Architecture Summary\n\n`;
     if(clientName) body+=`Client: ${clientName}\n`;
     body+=`Date: ${new Date().toLocaleDateString('en-GB')}\nArchitecture: ${state.arch||'Not specified'}\n\n`;
@@ -1176,7 +1245,22 @@ function SecureBlueprint() {
       section.keys.forEach(key=>{const v=state[key];if(v)body+=`${key.includes("_notes")?"Notes":FIELD_LABELS[key]||key}: ${v}\n`;});
       body+="\n";
     });
-    body+="\n" + "-".repeat(40) + "\nGenerated by SecureBlueprint — secureblueprint.io\n";
+    if(aiResult){
+      body+="\nAI SECURITY REVIEW\n"+"=".repeat(40)+"\n";
+      body+="Security Score: "+aiResult.score+"/10\n\n";
+      if(aiResult.summary) body+="Summary: "+aiResult.summary+"\n\n";
+      if(aiResult.risks && aiResult.risks.length){
+        body+="Risks Identified:\n";
+        aiResult.risks.forEach(r=>{ body+="  ["+((r.severity||"medium").toUpperCase())+"] "+r.title+"\n"; });
+        body+="\n";
+      }
+      if(aiResult.recommendations && aiResult.recommendations.length){
+        body+="Recommendations:\n";
+        aiResult.recommendations.forEach(r=>{ body+="  → "+(r.action||r)+"\n"; });
+        body+="\n";
+      }
+    }
+    body+="\n" + "-".repeat(40) + "\nGenerated by SecureBlueprint — secureblueprint.tech\n";
     const subject=clientName?`SecureBlueprint – Security Architecture Summary for ${clientName}`:`SecureBlueprint – Security Architecture Summary`;
     window.location.href=`mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   }
