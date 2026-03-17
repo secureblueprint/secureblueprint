@@ -1057,8 +1057,8 @@ function SecureBlueprint() {
     return (
       <div className={`field-group ${isGreyed?'greyed':''}`}>
         <label className="field-label">{f.label}</label>
-        {f.type==='text' && <input className="field-input" value={state[f.key]||''} onChange={e=>updateField(f.key,e.target.value)} placeholder={f.placeholder||''}/>}
-        {f.type==='textarea' && <textarea className="field-textarea" value={state[f.key]||''} onChange={e=>updateField(f.key,e.target.value)} placeholder={f.placeholder||''}/>}
+        {f.type==='text' && <input className="field-input" value={state[f.key]||''} onChange={e=>updateField(f.key,e.target.value)} placeholder={f.placeholder||''} maxLength={200}/>}
+        {f.type==='textarea' && <div><textarea className="field-textarea" value={state[f.key]||''} onChange={e=>updateField(f.key,e.target.value)} placeholder={f.placeholder||''} maxLength={2000}/><div style={{fontSize:'11px',color:'var(--text-light)',textAlign:'right',marginTop:'3px'}}>{(state[f.key]||'').length}/2000</div></div>}
         {f.type==='select' && <select className="field-select" value={state[f.key]||''} onChange={e=>updateField(f.key,e.target.value)}>{f.options.map(o=><option key={o} value={o}>{o}</option>)}</select>}
         {f.type==='multiselect' && <MultiSelect options={f.options} value={state[f.key]||''} onChange={v=>updateField(f.key,v)} key={f.key}/>}
         {isGreyed && (

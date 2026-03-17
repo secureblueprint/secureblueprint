@@ -64,6 +64,9 @@ export default async function handler(req, res) {
   if (!prompt || prompt.length < 50) {
     return res.status(400).json({ error: 'Invalid request — no architecture data provided.' });
   }
+  if (prompt.length > 20000) {
+    return res.status(400).json({ error: 'Request too large — please reduce the length of your notes fields.' });
+  }
 
   // 4. Call Anthropic API
   try {
