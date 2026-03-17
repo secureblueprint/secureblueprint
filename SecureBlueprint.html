@@ -1197,7 +1197,8 @@ function SecureBlueprint() {
         aiResult.recommendations.forEach(rec=>{
           if(y>268){y=addPage();}
           doc.setFontSize(7.5); doc.setTextColor(74,96,128); doc.setFont('helvetica','normal');
-          const recLines=doc.splitTextToSize('→ '+(rec.action||rec),contentW-4);
+          const recText='→ '+(rec.title||'')+(rec.detail?' — '+rec.detail:'');
+          const recLines=doc.splitTextToSize(recText,contentW-4);
           doc.text(recLines,margin+2,y); y+=recLines.length*4+3;
         });
       }
@@ -1224,7 +1225,7 @@ function SecureBlueprint() {
       }
       if(aiResult.recommendations && aiResult.recommendations.length){
         text+="RECOMMENDATIONS\n"+"-".repeat(40)+"\n";
-        aiResult.recommendations.forEach(r=>{ text+="→ "+(r.action||r)+"\n"; });
+        aiResult.recommendations.forEach(r=>{ text+="→ "+(r.title||'')+(r.detail?' — '+r.detail:'')+"\n"; });
         text+="\n";
       }
     }
@@ -1256,7 +1257,7 @@ function SecureBlueprint() {
       }
       if(aiResult.recommendations && aiResult.recommendations.length){
         body+="Recommendations:\n";
-        aiResult.recommendations.forEach(r=>{ body+="  → "+(r.action||r)+"\n"; });
+        aiResult.recommendations.forEach(r=>{ body+="  → "+(r.title||'')+(r.detail?' — '+r.detail:'')+"\n"; });
         body+="\n";
       }
     }
