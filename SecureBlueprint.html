@@ -1137,11 +1137,12 @@ function SecureBlueprint() {
         if(y>270){y=addPage();}
         const isNote=key.includes('_notes');
         const label=isNote?'Notes':(FIELD_LABELS[key]||key);
+        const displayValue=value.replace(/\|/g,', ');
         doc.setFillColor(248,250,252); doc.rect(margin,y-1,contentW,8,'F');
         doc.setFontSize(7.5); doc.setTextColor(136,153,170); doc.setFont('helvetica','bold');
         doc.text(label.toUpperCase(),margin+3,y+4.5);
         doc.setTextColor(15,34,64); doc.setFont('helvetica',isNote?'italic':'normal');
-        const lines=doc.splitTextToSize(value,95);
+        const lines=doc.splitTextToSize(displayValue||value,95);
         doc.text(lines,pageW-margin-2,y+4.5,{align:'right'});
         y+=lines.length>1?lines.length*5+3:9;
       });
@@ -1198,7 +1199,7 @@ function SecureBlueprint() {
         aiResult.recommendations.forEach(rec=>{
           if(y>265){y=addPage();}
           doc.setFontSize(8); doc.setTextColor(14,165,233); doc.setFont('helvetica','bold');
-          const titleLines=doc.splitTextToSize('→ '+(rec.title||''),contentW-4);
+          const titleLines=doc.splitTextToSize('- '+(rec.title||''),contentW-4);
           doc.text(titleLines,margin+2,y); y+=titleLines.length*5;
           if(rec.detail){
             doc.setFontSize(7.5); doc.setTextColor(74,96,128); doc.setFont('helvetica','normal');
